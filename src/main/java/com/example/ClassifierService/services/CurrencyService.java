@@ -57,7 +57,7 @@ public class CurrencyService implements ICurrencyService {
 
 
     @Override
-    public PageImpl<Currency> getCurrency(int page, int size) {
+    public PageImpl<Currency> getCurrencys(int page, int size) {
         // Проверка на положительность значений(что больше 0)
         if (page <= 0) {
             throw new ValidationException(MessageError.PAGE_NUMBER);
@@ -73,7 +73,7 @@ public class CurrencyService implements ICurrencyService {
             List<CurrencyEntity> currencyEntityList = currencyStorage.findAll();
             currencyList = new ArrayList<>();
             pageable = Pageable.ofSize(size).withPage(page - 1);
-            // Конвертация AccountEntity в Account и добавление в список
+            // Конвертация CurrencyEntity в Currency и добавление в список
             for (int i = 0; i < currencyEntityList.size(); i++) {
                 CurrencyEntity currencyEntity = currencyEntityList.get(i);
                 Currency currency = conversionService.convert(currencyEntity, Currency.class);
@@ -96,13 +96,26 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
-    public boolean checkCurrencyByUUID(UUID uuid) {
-        if (currencyStorage.findById(uuid).orElse(null) != null) {
-            return true;
-        }
-        return false;
-    }
+    public String getCurrency(UUID uuid) {
+        Currency currency;
+        CurrencyEntity currencyEntity;
+        try {
+            //получение валюты
+            currencyEntity = currencyStorage.findById(uuid).orElse(null);
+            currency = conversionService.convert(currencyEntity, Currency.class);
 
+        } catch (DataIntegrityViolationException e) {
+            throw new ValidationException(MessageError.BAD_REQUEST);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new ValidationException(MessageError.SERVER_ERROR);
+        }
+        //Проверка, что такая валюта есть
+        if (currency == null) {
+            throw new ValidationException(MessageError.INCORRECT_UUID);
+        }
+        return currency.getTitle();
+    }
 }
 
 

@@ -1,6 +1,6 @@
 package com.example.ClassifierService.dao.api;
 
-import com.example.ClassifierService.dao.entity.CurrencyEntity;
+
 import com.example.ClassifierService.dao.entity.OperationCategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

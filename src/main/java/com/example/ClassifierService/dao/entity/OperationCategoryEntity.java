@@ -26,6 +26,7 @@ public class OperationCategoryEntity {
 
     public OperationCategoryEntity() {
     }
+
     public UUID getUuid() {
         return uuid;
     }

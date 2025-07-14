@@ -1,7 +1,6 @@
 package com.example.ClassifierService.config;
 
 
-
 import com.example.ClassifierService.dao.converters.CurrencyConverter;
 import com.example.ClassifierService.dao.converters.CurrencyConverterEntity;
 import com.example.ClassifierService.dao.converters.OperationCategoryConverter;

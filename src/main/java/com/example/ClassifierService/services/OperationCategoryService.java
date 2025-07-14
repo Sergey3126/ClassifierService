@@ -1,12 +1,8 @@
 package com.example.ClassifierService.services;
 
-import com.example.ClassifierService.dao.api.ICurrencyStorage;
 import com.example.ClassifierService.dao.api.IOperationCategoryStorage;
-import com.example.ClassifierService.dao.entity.CurrencyEntity;
 import com.example.ClassifierService.dao.entity.OperationCategoryEntity;
-import com.example.ClassifierService.models.Currency;
 import com.example.ClassifierService.models.OperationCategory;
-import com.example.ClassifierService.services.api.ICurrencyService;
 import com.example.ClassifierService.services.api.IOperationCategoryService;
 import com.example.ClassifierService.services.api.MessageError;
 import com.example.ClassifierService.services.api.ValidationException;
@@ -61,7 +57,7 @@ public class OperationCategoryService implements IOperationCategoryService {
 
 
   @Override
-  public PageImpl<OperationCategory> getOperationCategory(int page, int size) {
+  public PageImpl<OperationCategory> getOperationCategorys(int page, int size) {
       // Проверка на положительность значений(что больше 0)
       if (page <= 0) {
           throw new ValidationException(MessageError.PAGE_NUMBER);
@@ -77,7 +73,7 @@ public class OperationCategoryService implements IOperationCategoryService {
           List<OperationCategoryEntity> operationCategoryEntityList = operationCategoryStorage.findAll();
           categoryList = new ArrayList<>();
           pageable = Pageable.ofSize(size).withPage(page - 1);
-          // Конвертация AccountEntity в Account и добавление в список
+          // Конвертация OperationCategoryEntity в OperationCategory и добавление в список
           for (int i = 0; i < operationCategoryEntityList.size(); i++) {
               OperationCategoryEntity categoryEntity = operationCategoryEntityList.get(i);
               OperationCategory category = conversionService.convert(categoryEntity, OperationCategory.class);
@@ -99,7 +95,27 @@ public class OperationCategoryService implements IOperationCategoryService {
       return new PageImpl<>(categoryList.subList(start, end), pageable, categoryList.size());
   }
 
+    @Override
+    public OperationCategory getOperationCategory(UUID uuid) {
+        OperationCategory operationCategory;
+        OperationCategoryEntity operationCategoryEntity;
+        try {
+            //Получение категории
+            operationCategoryEntity = operationCategoryStorage.findById(uuid).orElse(null);
+            operationCategory = conversionService.convert(operationCategoryEntity, OperationCategory.class);
 
+        } catch (DataIntegrityViolationException e) {
+            throw new ValidationException(MessageError.BAD_REQUEST);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new ValidationException(MessageError.SERVER_ERROR);
+        }
+        //Проверка, что такая категория есть
+        if (operationCategory == null) {
+            throw new ValidationException(MessageError.INCORRECT_UUID);
+        }
+        return operationCategory;
+    }
 
 
 

@@ -1,9 +1,8 @@
 package com.example.ClassifierService.dao.converters;
 
 
-import com.example.ClassifierService.dao.entity.CurrencyEntity;
 import com.example.ClassifierService.dao.entity.OperationCategoryEntity;
-import com.example.ClassifierService.models.Currency;
+
 import com.example.ClassifierService.models.OperationCategory;
 import org.springframework.core.convert.converter.Converter;
 

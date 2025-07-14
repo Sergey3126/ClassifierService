@@ -1,8 +1,10 @@
 package com.example.ClassifierService.services.api;
 
-import com.example.ClassifierService.models.Currency;
+
 import com.example.ClassifierService.models.OperationCategory;
 import org.springframework.data.domain.PageImpl;
+
+import java.util.UUID;
 
 public interface IOperationCategoryService {
 
@@ -22,11 +24,13 @@ public interface IOperationCategoryService {
      * @param size кол-во объектов на странице(размер страницы, больше 0)
      * @return список категорий
      */
-    PageImpl<OperationCategory> getOperationCategory(int page, int size);
+    PageImpl<OperationCategory> getOperationCategorys(int page, int size);
 
-
-
-
-
-
+    /**
+     * Дает категорию по ключу
+     *
+     * @param uuid ключ категории
+     * @return категорию
+     */
+    OperationCategory getOperationCategory(UUID uuid);
 }

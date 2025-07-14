@@ -26,6 +26,7 @@ public class CurrencyEntity {
 
     public CurrencyEntity() {
     }
+
     public UUID getUuid() {
         return uuid;
     }

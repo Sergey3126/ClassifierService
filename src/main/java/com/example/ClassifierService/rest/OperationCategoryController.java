@@ -1,13 +1,15 @@
 package com.example.ClassifierService.rest;
 
-import com.example.ClassifierService.models.Currency;
+
 import com.example.ClassifierService.models.OperationCategory;
-import com.example.ClassifierService.services.api.ICurrencyService;
+
 import com.example.ClassifierService.services.api.IOperationCategoryService;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 
 @RestController
@@ -29,23 +31,34 @@ public class OperationCategoryController {
     @PostMapping(value = {"", "/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public OperationCategory OperationCategory(@RequestBody OperationCategory categoryRaw) {
+    public OperationCategory createOperationCategory(@RequestBody OperationCategory categoryRaw) {
         return operationCategoryService.createOperationCategory(categoryRaw);
     }
 
-  /**
-   * Дает список категорий по номеру страницы и ее размеру
-   *
-   * @param page номер страницы(больше 0)
-   * @param size кол-во объектов на странице(размер страницы(больше 0))
-   * @return список категорий
-   */
-  @GetMapping(value = {"{page}/{size}", "{page}/{size}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  @ResponseStatus(HttpStatus.OK)
-  public PageImpl<OperationCategory> getOperationCategory(@PathVariable int page, @PathVariable int size) {
-      return operationCategoryService.getOperationCategory(page, size);
-  }
+    /**
+     * Дает список категорий по номеру страницы и ее размеру
+     *
+     * @param page номер страницы(больше 0)
+     * @param size кол-во объектов на странице(размер страницы(больше 0))
+     * @return список категорий
+     */
+    @GetMapping(value = {"{page}/{size}", "{page}/{size}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public PageImpl<OperationCategory> getOperationCategorys(@PathVariable int page, @PathVariable int size) {
+        return operationCategoryService.getOperationCategorys(page, size);
+    }
 
-
+    /**
+     * Дает категорию по ключу
+     *
+     * @param uuid ключ категории
+     * @return категорию
+     */
+    @GetMapping(value = {"{uuid}", "{uuid}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    public OperationCategory getOperationCategory(@PathVariable UUID uuid) {
+        return operationCategoryService.getOperationCategory(uuid);
+    }
 }

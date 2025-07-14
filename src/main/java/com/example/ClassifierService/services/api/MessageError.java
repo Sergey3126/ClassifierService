@@ -19,4 +19,5 @@ public final class MessageError {
 
     public static final String TITLE_TAKEN = " Такой title уже существует";
 
+    public static final String INCORRECT_UUID = "Неверный uuid";
 }
