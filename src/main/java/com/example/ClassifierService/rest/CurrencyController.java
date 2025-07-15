@@ -44,8 +44,8 @@ public class CurrencyController {
     @GetMapping(value = {"{page}/{size}", "{page}/{size}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PageImpl<Currency> getCurrencys(@PathVariable int page, @PathVariable int size) {
-        return currencyService.getCurrencys(page, size);
+    public PageImpl<Currency> getCurrencies(@PathVariable int page, @PathVariable int size) {
+        return currencyService.getCurrencies(page, size);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CurrencyController {
     @GetMapping(value = {"{uuid}", "{uuid}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public String getCurrency(@PathVariable UUID uuid) {
+    public Currency getCurrency(@PathVariable UUID uuid) {
         return currencyService.getCurrency(uuid);
     }
 

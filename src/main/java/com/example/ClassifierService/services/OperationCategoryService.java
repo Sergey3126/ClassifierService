@@ -33,7 +33,7 @@ public class OperationCategoryService implements IOperationCategoryService {
     public OperationCategory createOperationCategory(OperationCategory categoryRaw) {
 
         // Проверяем, что обязательные поля не пусты
-        if ( categoryRaw.getTitle() == null ) {
+        if (categoryRaw.getTitle() == null) {
             throw new ValidationException(MessageError.EMPTY_LINE);
         }
         //Проверка свободен ли такой title
@@ -56,44 +56,44 @@ public class OperationCategoryService implements IOperationCategoryService {
     }
 
 
-  @Override
-  public PageImpl<OperationCategory> getOperationCategorys(int page, int size) {
-      // Проверка на положительность значений(что больше 0)
-      if (page <= 0) {
-          throw new ValidationException(MessageError.PAGE_NUMBER);
-      }
-      if (size <= 0) {
-          throw new ValidationException(MessageError.PAGE_SIZE);
-      }
-      int start;
-      List<OperationCategory> categoryList;
-      int end;
-      Pageable pageable;
-      try {
-          List<OperationCategoryEntity> operationCategoryEntityList = operationCategoryStorage.findAll();
-          categoryList = new ArrayList<>();
-          pageable = Pageable.ofSize(size).withPage(page - 1);
-          // Конвертация OperationCategoryEntity в OperationCategory и добавление в список
-          for (int i = 0; i < operationCategoryEntityList.size(); i++) {
-              OperationCategoryEntity categoryEntity = operationCategoryEntityList.get(i);
-              OperationCategory category = conversionService.convert(categoryEntity, OperationCategory.class);
-              categoryList.add(category);
-          }
-          //Вычисление индексов start и end для страниц
-          start = (int) pageable.getOffset();
-          end = Math.min((start + pageable.getPageSize()), categoryList.size());
-      } catch (DataIntegrityViolationException e) {
-          throw new ValidationException(MessageError.BAD_REQUEST);
-      } catch (Exception e) {
-          System.err.println(e.getMessage());
-          throw new ValidationException(MessageError.SERVER_ERROR);
-      }
-      // Проверка, что start не выходит за пределы списка
-      if (start >= categoryList.size()) {
-          throw new ValidationException(MessageError.RETRIEVE_ACCOUNTS);
-      }
-      return new PageImpl<>(categoryList.subList(start, end), pageable, categoryList.size());
-  }
+    @Override
+    public PageImpl<OperationCategory> getOperationCategories(int page, int size) {
+        // Проверка на положительность значений(что больше 0)
+        if (page <= 0) {
+            throw new ValidationException(MessageError.PAGE_NUMBER);
+        }
+        if (size <= 0) {
+            throw new ValidationException(MessageError.PAGE_SIZE);
+        }
+        int start;
+        List<OperationCategory> categoryList;
+        int end;
+        Pageable pageable;
+        try {
+            List<OperationCategoryEntity> operationCategoryEntityList = operationCategoryStorage.findAll();
+            categoryList = new ArrayList<>();
+            pageable = Pageable.ofSize(size).withPage(page - 1);
+            // Конвертация OperationCategoryEntity в OperationCategory и добавление в список
+            for (int i = 0; i < operationCategoryEntityList.size(); i++) {
+                OperationCategoryEntity categoryEntity = operationCategoryEntityList.get(i);
+                OperationCategory category = conversionService.convert(categoryEntity, OperationCategory.class);
+                categoryList.add(category);
+            }
+            //Вычисление индексов start и end для страниц
+            start = (int) pageable.getOffset();
+            end = Math.min((start + pageable.getPageSize()), categoryList.size());
+        } catch (DataIntegrityViolationException e) {
+            throw new ValidationException(MessageError.BAD_REQUEST);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            throw new ValidationException(MessageError.SERVER_ERROR);
+        }
+        // Проверка, что start не выходит за пределы списка
+        if (start >= categoryList.size()) {
+            throw new ValidationException(MessageError.RETRIEVE_ACCOUNTS);
+        }
+        return new PageImpl<>(categoryList.subList(start, end), pageable, categoryList.size());
+    }
 
     @Override
     public OperationCategory getOperationCategory(UUID uuid) {
@@ -112,11 +112,11 @@ public class OperationCategoryService implements IOperationCategoryService {
         }
         //Проверка, что такая категория есть
         if (operationCategory == null) {
+
             throw new ValidationException(MessageError.INCORRECT_UUID);
         }
         return operationCategory;
     }
-
 
 
 }

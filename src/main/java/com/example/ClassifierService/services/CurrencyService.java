@@ -57,7 +57,7 @@ public class CurrencyService implements ICurrencyService {
 
 
     @Override
-    public PageImpl<Currency> getCurrencys(int page, int size) {
+    public PageImpl<Currency> getCurrencies(int page, int size) {
         // Проверка на положительность значений(что больше 0)
         if (page <= 0) {
             throw new ValidationException(MessageError.PAGE_NUMBER);
@@ -96,7 +96,7 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
-    public String getCurrency(UUID uuid) {
+    public Currency getCurrency(UUID uuid) {
         Currency currency;
         CurrencyEntity currencyEntity;
         try {
@@ -114,7 +114,7 @@ public class CurrencyService implements ICurrencyService {
         if (currency == null) {
             throw new ValidationException(MessageError.INCORRECT_UUID);
         }
-        return currency.getTitle();
+        return currency;
     }
 }
 

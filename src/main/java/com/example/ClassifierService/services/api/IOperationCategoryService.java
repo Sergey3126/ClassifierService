@@ -24,7 +24,7 @@ public interface IOperationCategoryService {
      * @param size кол-во объектов на странице(размер страницы, больше 0)
      * @return список категорий
      */
-    PageImpl<OperationCategory> getOperationCategorys(int page, int size);
+    PageImpl<OperationCategory> getOperationCategories(int page, int size);
 
     /**
      * Дает категорию по ключу

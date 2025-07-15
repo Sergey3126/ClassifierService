@@ -45,8 +45,8 @@ public class OperationCategoryController {
     @GetMapping(value = {"{page}/{size}", "{page}/{size}/"}, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public PageImpl<OperationCategory> getOperationCategorys(@PathVariable int page, @PathVariable int size) {
-        return operationCategoryService.getOperationCategorys(page, size);
+    public PageImpl<OperationCategory> getOperationCategories(@PathVariable int page, @PathVariable int size) {
+        return operationCategoryService.getOperationCategories(page, size);
     }
 
     /**

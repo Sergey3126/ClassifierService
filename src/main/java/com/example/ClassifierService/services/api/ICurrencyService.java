@@ -23,7 +23,7 @@ public interface ICurrencyService {
      * @param size кол-во объектов на странице(размер страницы, больше 0)
      * @return список валют
      */
-    PageImpl<Currency> getCurrencys(int page, int size);
+    PageImpl<Currency> getCurrencies(int page, int size);
 
 
     /**
@@ -32,5 +32,5 @@ public interface ICurrencyService {
      * @param uuid ключ валюты
      * @return валюту
      */
-    String getCurrency(UUID uuid);
+    Currency getCurrency(UUID uuid);
 }
